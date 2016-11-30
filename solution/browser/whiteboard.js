@@ -1,4 +1,4 @@
-window.whiteboard = new window.EventEmitter();
+window.whiteboard = new EventEmitter();
 
 (function () {
 
@@ -90,7 +90,7 @@ window.whiteboard = new window.EventEmitter();
         if (shouldBroadcast) {
             whiteboard.emit('draw', start, end, strokeColor);
         }
-        
+
     };
 
 })();
