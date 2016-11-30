@@ -3,7 +3,7 @@
 //     this.subscribers = {};
 // };
 
-class EventEmitter {
+window.EventEmitter = class {
     constructor(){
         this.subscribers = {};
     }

@@ -1,18 +1,18 @@
-var path = require('path');
+const path = require('path');
 
-var http = require('http');
-var server = http.createServer();
+const http = require('http');
+const server = http.createServer();
 
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 
-var socketio = require('socket.io')
+const socketio = require('socket.io')
 
 server.on('request', app);
 
-var io = socketio(server);
+const io = socketio(server);
 
-var drawHistory = {};
+const drawHistory = {};
 /*
 
  {
@@ -22,29 +22,25 @@ var drawHistory = {};
 
 io.on('connection', function (socket) {
 
-    var room;
+    let room;
 
-    socket.on('disconnect', function () {
-        console.log('im disconnecting')
-    });
+    socket.on('disconnect', ()  => {console.log('im disconnecting')});
 
-    socket.on('wantToJoinRoom', function (roomName) {
+    socket.on('wantToJoinRoom', (roomName) => {
         room = roomName;
         socket.join(room);
         if (!drawHistory[room]) drawHistory[room] = [];
         socket.emit('drawHistory', drawHistory[room]);
     });
 
-    socket.on('imDrawing', function (start, end, color) {
-        drawHistory[room].push({start: start, end: end, color: color});
+    socket.on('imDrawing', (start, end, color) => {
+        drawHistory[room].push({start, end, color});
         socket.broadcast.to(room).emit('otherDraw', start, end, color)
     });
 
 });
 
-server.listen(1337, function () {
-    console.log('The server is listening on port 1337!');
-});
+server.listen(1337, () => {console.log('The server is listening on port 1337!');});
 
 app.use(express.static(path.join(__dirname, 'browser')));
 

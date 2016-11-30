@@ -1,14 +1,14 @@
-window.whiteboard = new EventEmitter();
+window.whiteboard = new window.EventEmitter();
 
 (function () {
 
     // Ultimately, the color of our stroke;
-    var color;
+    let color;
 
     // The color selection elements on the DOM.
-    var colorElements = [].slice.call(document.querySelectorAll('.marker'));
+    const colorElements = [].slice.call(document.querySelectorAll('.marker'));
 
-    colorElements.forEach(function (el) {
+    colorElements.forEach(el => {
 
         // Set the background color of this element
         // to its id (purple, red, blue, etc).
@@ -17,7 +17,7 @@ window.whiteboard = new EventEmitter();
         // Attach a click handler that will set our color variable to
         // the elements id, remove the selected class from all colors,
         // and then add the selected class to the clicked color.
-        el.addEventListener('click', function () {
+        el.addEventListener('click', function() {
             color = this.id;
             document.querySelector('.selected').classList.remove('selected');
             this.classList.add('selected');
@@ -25,30 +25,30 @@ window.whiteboard = new EventEmitter();
 
     });
 
-    var canvas = document.querySelector('#paint');
-    var sketch = document.querySelector('#sketch');
-    var sketchStyle = getComputedStyle(sketch);
+    const canvas = document.querySelector('#paint');
+    const sketch = document.querySelector('#sketch');
+    const sketchStyle = getComputedStyle(sketch);
 
     canvas.width = parseInt(sketchStyle.getPropertyValue('width'));
     canvas.height = parseInt(sketchStyle.getPropertyValue('height'));
 
-    var ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d');
 
     ctx.lineWidth = 5;
     ctx.lineJoin = 'round';
     ctx.lineCap = 'round';
 
-    var currentMousePosition = {
+    let currentMousePosition = {
         x: 0,
         y: 0
     };
 
-    var lastMousePosition = {
+    let lastMousePosition = {
         x: 0,
         y: 0
     };
 
-    var drawing = false;
+    let drawing = false;
 
     canvas.addEventListener('mousedown', function (e) {
         drawing = true;
@@ -56,9 +56,7 @@ window.whiteboard = new EventEmitter();
         currentMousePosition.y = e.pageY - this.offsetTop;
     });
 
-    canvas.addEventListener('mouseup', function () {
-        drawing = false;
-    });
+    canvas.addEventListener('mouseup', () => {drawing = false;});
 
     canvas.addEventListener('mousemove', function (e) {
 
